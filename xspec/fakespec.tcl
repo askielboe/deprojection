@@ -21,22 +21,12 @@ proc fakespec { args } {
 # END > DEFINITIONS                                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-	# set i 0
-	# set temp $temp_min
 	set stepsize [expr ($temp_max-$temp_min)/$nspectra]
 
 	# Initiate the model (ignoring parameters for now)
-	# syntax: model mekal & $temperature & $nH & $abundance & $redshift & & $norm &
 	model mekal & & & & & & &
 	
-	# Load response files
-	# response $file_response
-	# arf $file_arf
-	
-	
-	
 	# Run through all parameters generating spectra and dumping to unique ACSII files
-	# Exposure time, correction norm (41796.2, 0.00000)
 	for {set temp $temp_min} {$temp <= $temp_max} {set temp [expr $temp + $stepsize]} {
 		newpar 1 & $temp
 		puts "Faking spectrum with temp: $temp"
