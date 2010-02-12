@@ -8,9 +8,9 @@ proc fakespec { args } {
 	set file_arf "1666_3.warf"
 	
 	# Model Parameters
-	set nspectra 10.
-	set temp_min 1.
-	set temp_max 5.
+	set nspectra 100. ; # Note that we actually get nspectra+1 spectra!
+	set temp_min 1.   ; # Decimals are limited to 3 places,
+	set temp_max 30.  ; # this can be changed, but then has to be changed in the fortran code as well.
 	set nH 1.
 	set abundance 0.3
 	set redshift 0.18
@@ -21,6 +21,7 @@ proc fakespec { args } {
 # END > DEFINITIONS                                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+	# Note that this way we actually get nspectra+1 spectra!
 	set stepsize [expr ($temp_max-$temp_min)/$nspectra]
 
 	# Initiate the model (ignoring parameters for now)
@@ -32,6 +33,6 @@ proc fakespec { args } {
 		puts "Faking spectrum with temp: $temp"
 		fakeit none & $file_response & $file_arf & y & & ./output/fakespec.fak & $exposuretime &
 		puts "Dumping spectrum to: fakespec_$temp.txt"
-		fdump infile=./output/fakespec.fak outfile=./output/fakespec_$temp.txt columns='COUNTS' rows=1-1024 prhead=no
+		fdump infile=./output/fakespec.fak outfile=./output/fakespec_[format "%1.3f" $temp].txt columns='COUNTS' rows=1-1024 prhead=no
 	}
 }
