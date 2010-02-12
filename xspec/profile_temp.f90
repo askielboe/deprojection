@@ -55,7 +55,7 @@ write(fnameout,'(a,I5,a)') './output/temp_profile_',chosenchannel,'.txt'
 open(2,file=fnameout, status="replace", form='FORMATTED')
 
 do n = 1,nspectra
-	write(2,'(F6.3,a,I5)') temps(n), ' ', count(n,chosenchannel)
+	write(2,'(F6.3,a,I10)') temps(n), ' ', count(n,chosenchannel)
 end do
 
 close(2)

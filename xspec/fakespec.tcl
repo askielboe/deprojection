@@ -14,6 +14,7 @@ proc fakespec { args } {
 	set nH 1.
 	set abundance 0.3
 	set redshift 0.18
+	set norm 1.
 	
 	# Fakeit Parameters
 	set exposuretime 41796.2
@@ -21,11 +22,23 @@ proc fakespec { args } {
 # END > DEFINITIONS                                         #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+	set question "N"
+	if {[exec ls ./output/] != ""} then {
+		puts "OUTPUT DIRECTORY NOT EMPTY!"
+		puts "Please move files you want to save to another directory before running fakespec!"
+		puts "Are you sure you wish to continue? ALL FILES IN ./OUTPUT/ WILL BE DELETED! (y/N)."
+		gets stdin question
+	}
+	if {$question == "y"} then {
+
+	# Remove all output from output directory to avoid confusion.
+	rm ./output/*
+
 	# Note that this way we actually get nspectra+1 spectra!
 	set stepsize [expr ($temp_max-$temp_min)/$nspectra]
 
 	# Initiate the model (ignoring parameters for now)
-	model mekal & & & & & & &
+	model mekal & & $nH & $abundance & $redshift & & $norm &
 	
 	# Run through all parameters generating spectra and dumping to unique ACSII files
 	for {set temp $temp_min} {$temp <= $temp_max} {set temp [expr $temp + $stepsize]} {
@@ -35,4 +48,7 @@ proc fakespec { args } {
 		puts "Dumping spectrum to: fakespec_$temp.txt"
 		fdump infile=./output/fakespec.fak outfile=./output/fakespec_[format "%1.3f" $temp].txt columns='COUNTS' rows=1-1024 prhead=no
 	}
+} else {
+	puts "Stopping..."
+}
 }
