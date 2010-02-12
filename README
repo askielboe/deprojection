@@ -1,0 +1,27 @@
+Description:
+
+Dependencies:
+	CosmoMC package (http://cosmologist.info/cosmomc/). Read the 'Generic Sampler' section in the readme (http://cosmologist.info/cosmomc/readme.html).
+	XSPEC (HEASOFT). Available here: http://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/
+
+File descriptions:
+
+xspec/fakespec.tcl
+	TCL code for generating fake xray spectra in xspec.
+	Input: Number of spectra (N), temperature range (in future also possibly other ranges), and all other parameters to constants.
+	Output: N spectra in ASCII format in tcl/output.
+	
+xspec/profile_temp.f90
+	FORTRAN code for plotting counts as a function of temperature for a given channel (energy) in the spectra generated from fakespec.tcl.
+	Input: number of spectra (integer value N), N output files from fakespec.tcl, chosen channel (energy) (integer value corresponding to chosen channel, can always be converted to energy later).
+	Output: ASCII file with counts as a function of temperature for the chosen channel (N points in total, one for each spectrum with different temperatures).
+	
+cosmomc/*
+	FORTRAN code from comsomc package. Included for support for custom likelihood function (xraylike). Copy to your cosmomc/source and compile. Edit the Makefile to your compiler.
+	
+cosmomc/xraylike.f90
+	FORTRAN code with our custom likelihood function. Design not completed yet, but we will need it to generate fake spectra, from a library of spectra generated in xspec, or even better; use analytical functions to generate synthetic spectra to be used in MCMC likelihood comparison with real data.
+	TODO: 
+		1) Find a good way to generate fake spectra fast from density, temperature, cluster axis-ratio (and possibly other) parameters.
+		2) Find a good way to compare the fake spectrum with the real deal (ie. a way to calculate the actual likelihood, or chi-square).
+	
