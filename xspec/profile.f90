@@ -59,23 +59,23 @@ end do
 close(1)
 
 ! Print output to file (2-d)
-! write(fnameout,'(a,I1,a,I5,a)') './output/profile_',ipar,'_',chosenchannel,'.txt'
-! open(2,file=fnameout, status="replace", form='FORMATTED')
-! 
-! do n = 1,nspectra
-! 	write(2,'(F7.3,a,I10)') params(n), ' ', count(n,chosenchannel)
-! end do
-! close(2)
+write(fnameout,'(a,I1,a,I5,a)') './output/profile_',ipar,'_',chosenchannel,'.txt'
+open(2,file=fnameout, status="replace", form='FORMATTED')
 
-! Print output to file (3-d)
-open(2,file='./output/profile.txt', status="replace", form='FORMATTED')
-
-do i = 1, 300/3 ! Loop over channels.
-	do n = 1,nspectra ! Loop over parameters
-		write(2,'(I4,a,F7.3,a,I10)') i*3, ' ', params(n), ' ', count(n,i*3)
-	end do
+do n = 1,nspectra
+	write(2,'(F7.3,a,I10)') params(n), ' ', count(n,chosenchannel)
 end do
 close(2)
+
+! Print output to file (3-d)
+! open(2,file='./output/profile.txt', status="replace", form='FORMATTED')
+! 
+! do i = 1, 300/3 ! Loop over channels.
+! 	do n = 1,nspectra ! Loop over parameters
+! 		write(2,'(I4,a,F7.3,a,I10)') i*3, ' ', params(n), ' ', count(n,i*3)
+! 	end do
+! end do
+! close(2)
 
 write(*,*) 'DONE PROCESSING FILES!'
 write(*,'(a,I1,a,I5,a)') 'Output written to: ./output/profile_',ipar,'_',chosenchannel,'.txt'

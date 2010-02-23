@@ -4,8 +4,8 @@ proc fakespec { args } {
 # BEGIN > DEFINITIONS - CHANGE THESE TO YOUR SPECIFIC TASK! #
 
 	# Filenames
-	set file_response "1666_3.wrmf"
-	set file_arf "1666_3.warf"
+# 	set file_response "1666_3.wrmf"
+# 	set file_arf "1666_3.warf"
 	
 	# Parameter to vary
 	set ipar 6			; # 1: Temp, 2: nH, 3: Abundance, 4: redshift, 6: norm
@@ -31,18 +31,22 @@ proc fakespec { args } {
 if {[exec ls ./output/] == ""} then {
 	# Note that this way we actually get nspectra+1 spectra!
 	set stepsize [expr ($param_max-$param_min)/$nspectra]
-
+	
+	dummyrsp .01 10 1024
+	
 	# Initiate the model (ignoring parameters for now)
 	model mekal & $temp & $nH & $abundance & $redshift & $switch & $norm &
 
-	dummy ; #0.1 5 1000
+	
 
 	# Run through all parameters generating spectra and dumping to unique ACSII files
 	for {set param $param_min} {$param <= $param_max} {set param [expr $param + $stepsize]} {
 		newpar $ipar & $param
+		data none
 		puts "Faking spectrum with parameter $ipar = $param."
-		fakeit none & $file_response & $file_arf & y & & ./output/fakespec.fak & $exposuretime &
-		# fakeit & y & & ./output/fakespec.fak & $exposuretime &
+		fakeit none & &y & & ./output/fakespec.fak & $exposuretime &
+		# Uncomment next line to use external response matrices
+		# fakeit none & $file_response & $file_arf & y & & ./output/fakespec.fak & $exposuretime &
 		puts "Dumping spectrum to: fakespec_$ipar-$param.txt"
 		fdump infile=./output/fakespec.fak outfile=./output/fakespec_$ipar-[format "%4.3f" $param].txt columns='COUNTS' rows=1-1024 prhead=no
 		}
