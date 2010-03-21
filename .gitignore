@@ -1,3 +1,4 @@
 .DS_Store
-xspec/output
-xspec/a.out
+*.out
+*.x
+xspec/data
