@@ -159,6 +159,40 @@ void WriteParameters() {
 	fclose(fout);
 }
 
+void WriteParSimple() {
+	FILE *fout = fopen("parout_simple.txt","w");
+	
+	fprintf(fout,"%15s %s", "highpar1 = (/ &" ,"\n");
+	for (int i = 1;i<998;++i) {
+		fprintf(fout,"%15f %s",par1[i], ", &\n");
+	}
+	fprintf(fout,"%15f %s",par1[999], " &\n");
+	fprintf(fout,"%15s %s", "/)" ,"\n\n");
+	
+	fprintf(fout,"%15s %s", "highpar2 = (/ &" ,"\n");
+	for (int i = 1;i<998;++i) {
+		fprintf(fout,"%15f %s",par2[i], ", &\n");
+	}
+	fprintf(fout,"%15f %s",par2[999], " &\n");
+	fprintf(fout,"%15s %s", "/)" ,"\n\n");
+	
+	fprintf(fout,"%15s %s", "highpar3 = (/ &" ,"\n");
+	for (int i = 1;i<998;++i) {
+		fprintf(fout,"%15f %s",par3[i], ", &\n");
+	}
+	fprintf(fout,"%15f %s",par3[999], " &\n");
+	fprintf(fout,"%15s %s", "/)" ,"\n\n");
+	
+	fprintf(fout,"%15s %s", "highpar4 = (/ &" ,"\n");
+	for (int i = 1;i<998;++i) {
+		fprintf(fout,"%15f %s",par4[i], ", &\n");
+	}
+	fprintf(fout,"%15f %s",par4[999], " &\n");
+	fprintf(fout,"%15s %s", "/)" ,"\n\n");
+	
+	fclose(fout);
+}
+
 void PlotResults() {
 
 	// Plot chisquare as a function of channel

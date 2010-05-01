@@ -20,7 +20,7 @@ proc fakespec { args } {
 	set abundance 0.3
 	set redshift 0.18
 	set switch 1.
-	set norm 1.
+	set norm 2.47359
 	
 	# Fakeit Parameters
 	set exposuretime 4179600.2
